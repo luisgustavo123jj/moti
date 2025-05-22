@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para una Amiga Especial</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #ffeef8 0%, #f8e8ff 50%, #e8f4ff 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 500px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 30px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 192, 203, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 182, 193, 0.05), transparent);
+            animation: shimmer 4s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .photo-frame {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 30px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 6px solid #ffb6c1;
+            box-shadow: 0 15px 35px rgba(255, 182, 193, 0.4);
+            position: relative;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .photo-frame::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            background: linear-gradient(45deg, #ff69b4, #ffb6c1, #ffc0cb, #ff69b4);
+            border-radius: 50%;
+            z-index: -1;
+            animation: rotate 6s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .message {
+            font-size: 1.3em;
+            color: #8b4a7c;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 2px rgba(255, 182, 193, 0.3);
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+
+        .highlight {
+            color: #d63384;
+            font-weight: bold;
+        }
+
+        .sweet-button {
+            background: linear-gradient(45deg, #ff69b4, #ff91c2);
+            border: none;
+            padding: 15px 35px;
+            font-size: 1.1em;
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(255, 105, 180, 0.4);
+            animation: fadeInUp 1s ease-out 1s both;
+            position: relative;
+            overflow: hidden;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .sweet-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .sweet-button:hover::before {
+            left: 100%;
+        }
+
+        .sweet-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 12px 35px rgba(255, 105, 180, 0.6);
+            background: linear-gradient(45deg, #ff1493, #ff69b4);
+        }
+
+        .sweet-button:active {
+            transform: translateY(-1px) scale(1.02);
+        }
+
+        .decorative-hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .heart {
+            position: absolute;
+            color: #ffb6c1;
+            font-size: 20px;
+            animation: floatHeart 8s infinite;
+            opacity: 0.6;
+        }
+
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Estilos para la alerta personalizada */
+        .custom-alert {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .alert-content {
+            background: linear-gradient(135deg, #ffeef8, #f8e8ff);
+            padding: 40px;
+            border-radius: 25px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            border: 3px solid #ffb6c1;
+            max-width: 400px;
+            position: relative;
+            animation: bounceIn 0.5s ease-out;
+        }
+
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0.3);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            70% {
+                transform: scale(0.9);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .alert-message {
+            font-size: 1.5em;
+            color: #8b4a7c;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .alert-heart {
+            font-size: 3em;
+            color: #ff69b4;
+            animation: heartbeat 1.5s ease-in-out infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .close-alert {
+            background: linear-gradient(45deg, #ff69b4, #ff91c2);
+            border: none;
+            padding: 12px 25px;
+            color: white;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .close-alert:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="decorative-hearts">
+        <div class="heart" style="left: 10%; animation-delay: 0s;">♥</div>
+        <div class="heart" style="left: 20%; animation-delay: 2s;">♡</div>
+        <div class="heart" style="left: 30%; animation-delay: 4s;">♥</div>
+        <div class="heart" style="left: 40%; animation-delay: 1s;">♡</div>
+        <div class="heart" style="left: 50%; animation-delay: 3s;">♥</div>
+        <div class="heart" style="left: 60%; animation-delay: 5s;">♡</div>
+        <div class="heart" style="left: 70%; animation-delay: 2.5s;">♥</div>
+        <div class="heart" style="left: 80%; animation-delay: 4.5s;">♡</div>
+        <div class="heart" style="left: 90%; animation-delay: 1.5s;">♥</div>
+    </div>
+
+    <div class="container">
+        <div class="photo-frame">
+            <img src="IMG_20250519_182739_265.webp" alt="Tu amiga especial" class="photo">
+        </div>
+        
+        <div class="message">
+            <span class="highlight">Tú puedes conseguir las 5 firmas, eres la mejor.</span><br><br>
+            Siempre puedes contar conmigo, siempre estaré para ti ♥
+        </div>
+        
+        <button class="sweet-button" onclick="showAlert()">
+            ✨ Toca Aquí ✨
+        </button>
+    </div>
+
+    <!-- Alerta personalizada -->
+    <div class="custom-alert" id="customAlert">
+        <div class="alert-content">
+            <div class="alert-heart">♥</div>
+            <div class="alert-message">
+                ¡Eres maravillosa, confío en ti!
+            </div>
+            <button class="close-alert" onclick="closeAlert()">
+                Cerrar
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function showAlert() {
+            const alert = document.getElementById('customAlert');
+            alert.style.display = 'flex';
+        }
+
+        function closeAlert() {
+            const alert = document.getElementById('customAlert');
+            alert.style.display = 'none';
+        }
+
+        // Crear corazones flotantes de forma aleatoria
+        function createFloatingHeart() {
+            const heartsContainer = document.querySelector('.decorative-hearts');
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = Math.random() > 0.5 ? '♥' : '♡';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDelay = Math.random() * 2 + 's';
+            heart.style.fontSize = (15 + Math.random() * 10) + 'px';
+            
+            heartsContainer.appendChild(heart);
+            
+            // Remover el corazón después de la animación
+            setTimeout(() => {
+                heart.remove();
+            }, 8000);
+        }
+
+        // Crear corazones cada cierto tiempo
+        setInterval(createFloatingHeart, 3000);
+
+        // Cerrar alerta al hacer clic fuera del contenido
+        document.getElementById('customAlert').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeAlert();
+            }
+        });
+    </script>
+</body>
+</html>
